@@ -24,6 +24,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    //@Autowired
+    //AuthenticationEntryPoint authenticationEntryPoint;
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         super.configure(web);
