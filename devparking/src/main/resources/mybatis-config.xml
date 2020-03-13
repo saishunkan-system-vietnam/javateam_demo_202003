@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+        <settings>
+            <setting name="logImpl" value="LOG4J"/>
+        </settings>
+        <typeAliases>
+            <typeAlias alias="AppRole" type="vn.de.example.parkingregistration.model.AppRole"/>
+            <typeAlias alias="AppUser" type="vn.de.example.parkingregistration.model.AppUser"/>
+            <typeAlias alias="UserRole" type="vn.de.example.parkingregistration.model.UserRole"/>
+        </typeAliases>
+        <mappers>
+            <mapper resource="xmlmapper/AppRoleModelMapper.xml"/>
+            <mapper resource="xmlmapper/AppUserModelMapper.xml"/>
+            <mapper resource="xmlmapper/UserRoleModelMapper.xml"/>
+        </mappers>
+</configuration>
