@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import vn.de.example.parkingregistration.controller.dto.AppUserDTO;
 import vn.de.example.parkingregistration.model.AppUser;
@@ -25,6 +26,7 @@ public class AppUserService extends BaseTransactionalService {
     }
 
     public AppUserDTO findById(Long userId) {
+        Assert.notNull(userId, "userId must not be null");
         return repository.findById(userId);
     }
 }

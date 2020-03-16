@@ -19,7 +19,11 @@
         <resultMap type="AppUser" id="userAppMap">
               <id column="user_id" property="userId"/>
               <result column="user_name" property="userName"/>
+              <result column="phone" property="phone"/>
               <result column="encryted_password" property="encrytedPassword"/>
               <result column="enabled" property="enabled"/>
+              <result column="created_datetime" property="createdDatetime"/>
+              <result column="update_datetime" property="updateDatetime"/>
+              <result column="isDeleted" property="is_deleted"/>
         </resultMap>
 </mapper>

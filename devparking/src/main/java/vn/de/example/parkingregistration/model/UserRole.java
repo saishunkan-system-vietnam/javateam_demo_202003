@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserRole {
+public class UserRole extends EntityImpl {
 
     private Long id;
 

@@ -1,4 +1,4 @@
-package vn.de.example.parkingregistration.service;
+package vn.de.example.parkingregistration.security;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import lombok.val;
 import vn.de.example.parkingregistration.model.AppUser;
+import vn.de.example.parkingregistration.service.AppRoleService;
+import vn.de.example.parkingregistration.service.AppUserService;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

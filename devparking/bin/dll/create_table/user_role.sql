@@ -2,9 +2,12 @@
 drop table if exists user_role;
 create table user_role
 (
-  id        bigint not null,
-  user_id   bigint not null,
-  role_id   bigint not null
+  id                    bigint      not null,
+  user_id               bigint      not null,
+  role_id               bigint      not null,
+  created_datetime      timestamp   not null default current_timestamp,
+  update_datetime       timestamp   not null default current_timestamp,
+  is_deleted            bool        not null default false
 );
 --
 alter table user_role

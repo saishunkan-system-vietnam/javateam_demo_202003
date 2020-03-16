@@ -12,7 +12,7 @@ public class AppUserDTO implements DTO {
 
     private String userName;
 
-    private String encrytedPassword;
+    private String phone;
 
     private Boolean enabled;
 

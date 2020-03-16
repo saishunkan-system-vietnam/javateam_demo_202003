@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import lombok.val;
 import vn.de.example.parkingregistration.controller.dto.AppUserDTO;
+import vn.de.example.parkingregistration.exception.DataNotFoundException;
 import vn.de.example.parkingregistration.model.AppUser;
 import vn.de.example.parkingregistration.model.mapper.AppUserModelMapper;
 
@@ -27,7 +28,8 @@ public class AppUserRepository {
     }
 
     public AppUserDTO findById(Long userId) {
-        val appUser = mapper.findById(userId).orElse(new AppUser());
+        val appUser = mapper.findById(userId)
+                .orElseThrow(() -> new DataNotFoundException("Not found user : " + userId));
         return new AppUserDTO(appUser);
     }
 }

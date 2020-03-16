@@ -9,8 +9,11 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import vn.de.example.parkingregistration.service.UserDetailsServiceImpl;
+import vn.de.example.parkingregistration.security.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -19,13 +22,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    AuthenticationEntryPoint authenticationEntryPoint;
+
+    @Autowired
+    AuthenticationSuccessHandler authenticationSuccessHandler;
+
+    @Autowired
+    AuthenticationFailureHandler authenticationFailureHandler;
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    //@Autowired
-    //AuthenticationEntryPoint authenticationEntryPoint;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -35,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        //auth.authenticationProvider(authProvider);
     }
 
     @Override
@@ -42,7 +52,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
 
-        //http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests().anyRequest().authenticated();
+
+        http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
+
+        http.formLogin().loginProcessingUrl("/api/user/login")
+                .successHandler(authenticationSuccessHandler)
+                .failureHandler(authenticationFailureHandler)
+                .usernameParameter("userName")
+                .passwordParameter("password");
 
     }
 
