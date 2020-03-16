@@ -50,17 +50,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable();
-
-        http.authorizeRequests().anyRequest().authenticated();
-
-        http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
-
-        http.formLogin().loginProcessingUrl("/api/user/login")
-                .successHandler(authenticationSuccessHandler)
-                .failureHandler(authenticationFailureHandler)
-                .usernameParameter("userName")
-                .passwordParameter("password");
+//        http.csrf().disable();
+//
+//        http.authorizeRequests().anyRequest().authenticated();
+//
+//        http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
+//
+//        http.formLogin().loginProcessingUrl("/api/user/login")
+//                .successHandler(authenticationSuccessHandler)
+//                .failureHandler(authenticationFailureHandler)
+//                .usernameParameter("userName")
+//                .passwordParameter("password");
 
     }
 

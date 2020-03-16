@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="vn.de.example.parkingregistration.model.mapper.StudentModelMapper">
+
+	<select id="findAllStudent" resultType="Student">
+		select * from student
+	</select>
+	<select id="searchStudent" resultType="Student">
+		select * from student where 1=1
+		<if test="name != null">
+			AND name like '%${name}%'
+		</if>
+
+		<if test="branch != null">
+			AND branch like '%${branch}%'
+		</if>
+	</select>
+
+	<resultMap type="Student" id="student">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="branch" property="branch" />
+		<result column="phone" property="phone" />
+	</resultMap>
+</mapper>
