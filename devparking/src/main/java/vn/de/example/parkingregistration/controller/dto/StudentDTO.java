@@ -11,7 +11,7 @@ public class StudentDTO implements DTO {
 	private String name;
 	private String branch;
 	private String phone;
-	 public StudentDTO(Student student) {
+	public StudentDTO(Student student) {
 	        copyProperties(this, student);
 	    }
 }
