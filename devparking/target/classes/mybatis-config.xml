@@ -12,6 +12,7 @@
             <typeAlias alias="UserRole" type="vn.de.example.parkingregistration.model.UserRole"/>
             <typeAlias alias="Student" type="vn.de.example.parkingregistration.model.Student"/>
             <typeAlias alias="Subject" type="vn.de.example.parkingregistration.model.Subject"/>
+            <typeAlias alias="StudentSubject" type="vn.de.example.parkingregistration.model.StudentSubject"/>
         </typeAliases>
         <typeHandlers>
              <typeHandler handler="org.apache.ibatis.type.LocalDateTimeTypeHandler" />
@@ -22,5 +23,6 @@
             <mapper resource="xmlmapper/UserRoleModelMapper.xml"/>
             <mapper resource="xmlmapper/StudentModelMapper.xml"/>
             <mapper resource="xmlmapper/SubjectModelMapper.xml"/>
+            <mapper resource="xmlmapper/StudentSubjectModelMapper.xml"/>
         </mappers>
 </configuration>

@@ -10,8 +10,10 @@ public class StudentSubjectDTO implements DTO {
 	private int idStuSub;
 	private int id;
 	private int idSub;
+	private String sub;
 	private float pointSub;
 	public StudentSubjectDTO (StudentSubject studentSubject) {
 		copyProperties(this,studentSubject);
 	}
+	
 }

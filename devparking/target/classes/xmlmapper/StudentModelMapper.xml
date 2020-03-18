@@ -8,34 +8,44 @@
 	<select id="findAllStudent" resultType="Student">
 		select * from student
 	</select>
-	
-	<select id="findByIdStudent" parameterType="int" resultType="Student">
+
+	<select id="findByIdStudent" parameterType="int"
+		resultType="Student">
 		select * from student where id =#{id};
 	</select>
 	<insert id="addStudent" parameterType="Student">
-	Insert into student (id,name,branch,phone) values (#{id},#{name},#{branch},#{phone});
-	</insert> 
+		Insert into student
+		(id,name,branch,phone) values
+		(#{id},#{name},#{branch},#{phone});
+	</insert>
 	<delete id="deleteStudent" parameterType="int">
 		DELETE from student
 		WHERE id = #{id};
 	</delete>
 	<update id="updateStudent" parameterType="Student">
 		UPDATE student SET
-		name = #{name}, branch = #{branch}, phone = #{phone} WHERE id = #{id};
+		name
+		= #{name}, branch = #{branch}, phone = #{phone} WHERE id = #{id};
 	</update>
-	
+
 	<select id="search" resultType="Student">
 		select * from student where 1=1
 		<if test="name != null">
-		   AND name like '%${name}%'
+			AND name like '%${name}%'
 		</if>
 
 		<if test="branch != null">
 			AND branch like '%${branch}%'
 		</if>
 	</select>
-	<select id="findStudent" resultType="Student">
-
+	<select id="findStudent" resultMap="student">
+		<!-- select *, (select avg(point_sub) from stu_sub join subject on stu_sub.id_sub 
+			= subject.id_sub where id = st.id) as diem_tb from student as st join stu_sub 
+			as ss on st.id=ss.id join subject as sb on ss.id_sub=sb.id_sub; -->
+		Select *, count(sb.sub) as so_mon from student as st join stu_sub as ss on
+		st.id=ss.id join subject as sb on ss.id_sub=sb.id_sub
+		group by st.name
+		having count(sb.sub) >3;
 	</select>
 
 	<resultMap type="Student" id="student">
@@ -43,12 +53,18 @@
 		<result column="name" property="name" />
 		<result column="branch" property="branch" />
 		<result column="phone" property="phone" />
-		<!-- <collection property="subjects" ofType="Subject">
-        <result property="idSub" column="id_sub"/>
-        <result column="sub" property="sub" />
-    </collection>
-    <collection property="studentSubjects" ofType="StudentSubject">
-    <result column="point_sub" property="pointSub" />
-    </collection> -->
+		<result column="diem_tb" property="diemTB" />
+		<result column="so_mon" property="soMon" />
+		<!-- <collection property="subjects" ofType="Subject"> <result column="id_sub" 
+			property="idSub" /> <result column="sub" property="sub" /> </collection> -->
+		<collection property="studentSubjects"
+			ofType="StudentSubject">
+			<result column="id_stu_sub" property="idStuSub" />
+			<result column="id" property="id" />
+			<result column="id_sub" property="idSub" />
+			<result column="sub" property="sub" />
+			<result column="point_sub" property="pointSub" />
+		</collection>
 	</resultMap>
+
 </mapper>

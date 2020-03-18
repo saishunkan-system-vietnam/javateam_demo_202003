@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.val;
 import vn.de.example.parkingregistration.controller.dto.AppUserDTO;
-import vn.de.example.parkingregistration.controller.dto.StudentDTO;
-import vn.de.example.parkingregistration.model.Student;
 import vn.de.example.parkingregistration.service.AppUserService;
-import vn.de.example.parkingregistration.service.StudentService;
 
 @CrossOrigin(origins = "http://localhost:8082")
 @RestController
@@ -24,7 +21,6 @@ public class AppUserRestController {
 
 	@Autowired
 	AppUserService service;
-	
 
 	@GetMapping("/findById/{userId}")
 	public AppUserDTO findById(@PathVariable Long userId) {
@@ -36,6 +32,5 @@ public class AppUserRestController {
 	public List<AppUserDTO> findAll() {
 		return service.findAllUser();
 	}
-	
 
 }

@@ -61,10 +61,10 @@ public class StudentRestController {
 	public List<StudentDTO> search(@RequestBody Student student) {
 		return studentService.search(student);
 	}
-	/*
-	 * @GetMapping("/student/findStudent") public List<StudentDTO>
-	 * findStudent(@RequestBody Student student) { return
-	 * studentService.findStudent(student); }
-	 */
+
+	@GetMapping("/student/findStudent")
+	public List<StudentDTO> findStudent(@RequestBody Student student) {
+		return studentService.findStudent(student);
+	}
 
 }
