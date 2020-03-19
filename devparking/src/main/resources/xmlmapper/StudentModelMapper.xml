@@ -42,10 +42,18 @@
 		<!-- select *, (select avg(point_sub) from stu_sub join subject on stu_sub.id_sub 
 			= subject.id_sub where id = st.id) as diem_tb from student as st join stu_sub 
 			as ss on st.id=ss.id join subject as sb on ss.id_sub=sb.id_sub; -->
-		Select *, count(sb.sub) as so_mon from student as st join stu_sub as ss on
+<!-- 		Select *, count(sb.sub) as so_mon from student as st join stu_sub as ss on
 		st.id=ss.id join subject as sb on ss.id_sub=sb.id_sub
 		group by st.name
-		having count(sb.sub) >3;
+		having count(sb.sub) >3; -->
+		Select *, (
+		Select count(distinct sb.sub)  from student as st join stu_sub as ss on st.id=ss.id join subject as sb on ss.id_sub=sb.id_sub
+	    where st.id = st1.id
+		group by st.name
+		having count(sb.sub) >= 3
+		) as so_mon from student as st1 join stu_sub as ss1 on st1.id=ss1.id join subject as sb1 on ss1.id_sub=sb1.id_sub 
+		WHERE (select count(*) from stu_sub where id = st1.id) >= 3;
+		 
 	</select>
 
 	<resultMap type="Student" id="student">

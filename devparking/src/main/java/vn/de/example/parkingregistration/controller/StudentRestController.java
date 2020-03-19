@@ -21,29 +21,28 @@ import vn.de.example.parkingregistration.model.Student;
 import vn.de.example.parkingregistration.service.StudentService;
 
 @RestController
-@RequestMapping(path = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/student", produces = MediaType.APPLICATION_JSON_VALUE)
 public class StudentRestController {
 	@Autowired
 	StudentService studentService;
 
-	@GetMapping("/student")
+	@GetMapping("/findAllStudent")
 	public List<StudentDTO> findAllStudent() {
 		return studentService.findAllStudent();
 	}
 
-	@GetMapping("/student/{id}")
+	@GetMapping("/findByIdStudent/{id}")
 	public StudentDTO getReservation(@PathVariable int id) {
 		val studentDTO = studentService.findByIdStudent(id);
 		return studentDTO;
 	}
 
-	@PostMapping("/student/add")
-	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping("/add")
 	public void add(@RequestBody Student student) {
 		studentService.addStudent(student);
 	}
 
-	@PutMapping("/student/edit/{id}")
+	@PutMapping("/edit/{id}")
 	public void editStudent(@PathVariable int id, @RequestBody Student student) {
 		val studentEdit = studentService.findByIdStudent(id);
 		studentEdit.setName(student.getName());
@@ -51,20 +50,24 @@ public class StudentRestController {
 		studentService.updateStudent(studentEdit);
 	}
 
-	@DeleteMapping("/student/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public void deleteStudent(@PathVariable int id) {
 		val student = studentService.findByIdStudent(id);
 		studentService.deleteStudent(student);
 	}
 
-	@GetMapping("/student/search")
+	@GetMapping("/search")
 	public List<StudentDTO> search(@RequestBody Student student) {
 		return studentService.search(student);
 	}
 
-	@GetMapping("/student/findStudent")
+	@GetMapping("/findStudent")
 	public List<StudentDTO> findStudent(@RequestBody Student student) {
 		return studentService.findStudent(student);
 	}
-
+	
+	@GetMapping("/find")
+	public List<StudentDTO> find() {
+		return studentService.find();
+	}
 }

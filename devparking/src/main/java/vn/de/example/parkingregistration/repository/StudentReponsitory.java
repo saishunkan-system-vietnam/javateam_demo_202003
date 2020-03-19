@@ -28,6 +28,10 @@ public class StudentReponsitory {
 	public List<StudentDTO> findStudent(Student student) {
 		return mapper.findStudent(student).stream().map(student2 -> new StudentDTO(student2)).collect(Collectors.toList());
 	}
+	
+	public List<StudentDTO> find() {
+		return mapper.find().stream().map(student3 -> new StudentDTO(student3)).collect(Collectors.toList());
+	}
 
 	public void addStudent(Student student) {
 		mapper.addStudent(student);

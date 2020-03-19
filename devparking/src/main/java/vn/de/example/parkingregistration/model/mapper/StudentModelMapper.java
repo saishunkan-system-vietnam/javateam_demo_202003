@@ -10,6 +10,7 @@ public interface StudentModelMapper {
 	List<Student> findAllStudent();
 	List<Student> search(Student student);
 	List<Student> findStudent(Student student);
+	List<Student> find();
 	public void addStudent(Student student);
 	public void updateStudent(StudentDTO student);
 	public void deleteStudent(StudentDTO student);

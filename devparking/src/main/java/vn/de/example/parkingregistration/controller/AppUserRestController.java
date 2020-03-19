@@ -14,7 +14,6 @@ import lombok.val;
 import vn.de.example.parkingregistration.controller.dto.AppUserDTO;
 import vn.de.example.parkingregistration.service.AppUserService;
 
-@CrossOrigin(origins = "http://localhost:8082")
 @RestController
 @RequestMapping(path = "/api/user", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AppUserRestController {

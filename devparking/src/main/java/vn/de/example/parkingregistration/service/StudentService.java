@@ -28,6 +28,11 @@ public class StudentService extends BaseTransactionalService {
 	public List<StudentDTO> findStudent(Student student) {
 		return reponsitory.findStudent(student);
 	}
+	
+	public List<StudentDTO> find() {
+		return reponsitory.find();
+	}
+
 
 	public void addStudent(Student student) {
 		reponsitory.addStudent(student);

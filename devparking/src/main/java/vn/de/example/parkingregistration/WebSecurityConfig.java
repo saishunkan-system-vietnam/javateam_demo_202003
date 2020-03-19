@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
 
-        http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests().anyRequest().permitAll();
 
         http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
 
