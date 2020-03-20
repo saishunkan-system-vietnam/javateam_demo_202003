@@ -19,7 +19,7 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
             AuthenticationException authException) throws IOException {
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType(MediaType.TEXT_PLAIN_VALUE);
-        response.getWriter().write("please login");
+        response.getWriter().write("Please login");
         response.getWriter().flush();
     }
 

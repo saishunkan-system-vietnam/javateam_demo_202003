@@ -19,5 +19,4 @@ public class AppUserDTO implements DTO {
     public AppUserDTO(AppUser appUser) {
         copyProperties(this, appUser);
     }
-
 }

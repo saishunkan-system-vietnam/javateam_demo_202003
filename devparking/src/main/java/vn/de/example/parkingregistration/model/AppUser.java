@@ -5,15 +5,16 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class AppUser extends EntityImpl{
+public class AppUser extends EntityImpl {
 
     private Long userId;
 
-    private String userName;
-
     private String phone;
+
+    private String userName;
 
     private String encrytedPassword;
 
     private Boolean enabled;
+
 }

@@ -1,8 +1,8 @@
 package vn.de.example.parkingregistration.security;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -37,16 +37,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         val appUser = optAppUser.get();
 
-        List<String> roles = appRoleService.getRoleNames(appUser.getUserId());
-
-        List<GrantedAuthority> grants = new ArrayList<GrantedAuthority>();
-
-        roles.forEach(role -> {
-            GrantedAuthority grant = new SimpleGrantedAuthority(role);
-            grants.add(grant);
-        });
+        List<GrantedAuthority> grants = appRoleService.getRoleNames(appUser.getUserId()).stream()
+                .map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 
         UserDetails userDetails = (UserDetails) new User(appUser.getUserName(), appUser.getEncrytedPassword(), grants);
+
         return userDetails;
     }
 
