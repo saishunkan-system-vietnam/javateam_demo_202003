@@ -8,9 +8,10 @@ import vn.de.example.parkingregistration.model.Student;
 
 public interface StudentModelMapper {
 	List<Student> findAllStudent();
-	List<Student> search(Student student);
+	List<Student> search(StudentDTO student);
 	List<Student> findStudent(Student student);
 	List<Student> find();
+	public int findCountStudents(StudentDTO student);
 	public void addStudent(Student student);
 	public void updateStudent(StudentDTO student);
 	public void deleteStudent(StudentDTO student);

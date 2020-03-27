@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class StudentSubject {
-	@JsonIgnore
 	private int idStuSub;
 	@JsonIgnore
 	private int id;

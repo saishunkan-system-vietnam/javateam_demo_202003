@@ -11,17 +11,21 @@ import vn.de.example.parkingregistration.controller.dto.StudentDTO;
 import vn.de.example.parkingregistration.model.Student;
 //import vn.de.example.parkingregistration.model.Student;
 import vn.de.example.parkingregistration.repository.StudentReponsitory;
+import vn.de.example.parkingregistration.repository.StudentSubjectRespository;
 
 @Service
 public class StudentService extends BaseTransactionalService {
 	@Autowired
 	private StudentReponsitory reponsitory;
+	
+	@Autowired
+	private StudentSubjectRespository subReponsitory;
 
 	public List<StudentDTO> findAllStudent() {
 		return reponsitory.findAllStudent();
 	}
 
-	public List<StudentDTO> search(Student student) {
+	public List<Student> search(StudentDTO student) {
 		return reponsitory.search(student);
 	}
 
@@ -49,5 +53,8 @@ public class StudentService extends BaseTransactionalService {
 	public StudentDTO findByIdStudent(int id) {
 		Assert.notNull(id, "userId must not be null");
 		return reponsitory.findByIdStudent(id);
+	}
+	public int findCountStudents(StudentDTO student) {
+		return reponsitory.findCountStudents(student);
 	}
 }

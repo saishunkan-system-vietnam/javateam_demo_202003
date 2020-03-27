@@ -3,4 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="vn.de.example.parkingregistration.model.mapper.StudentSubjectModelMapper">
+		<insert id="addSS" parameterType="StudentSubject">
+			Insert into stu_sub
+			(id,id_sub, point_sub) values
+			(#{id},#{idSub},#{pointSub});
+	    </insert>
+
 </mapper>

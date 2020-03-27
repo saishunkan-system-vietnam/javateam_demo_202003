@@ -5,31 +5,91 @@
 <mapper
 	namespace="vn.de.example.parkingregistration.model.mapper.StudentModelMapper">
 
-	<select id="findAllStudent" resultType="Student">
-		select * from student
+	<select id="findAllStudent" resultMap="student">
+		<!-- select * from student left join stu_sub on student.id=stu_sub.id left 
+			join subject on stu_sub.id_sub=subject.id_sub; -->
+		Select *, ( Select count(distinct sb.sub) from student as st join
+		stu_sub as ss on st.id=ss.id join subject as sb on ss.id_sub=sb.id_sub
+		where st.id = st1.id
+		) as so_mon,ROUND((select avg(point_sub) from
+		stu_sub
+		join subject on
+		stu_sub.id_sub = subject.id_sub where id =
+		st1.id ),2) as
+		diem_tb
+		from student as st1 left join stu_sub as ss1 on
+		st1.id=ss1.id
+		left join
+		subject as
+		sb1 on ss1.id_sub=sb1.id_sub
+		order by
+		st1.id asc;
 	</select>
 
 	<select id="findByIdStudent" parameterType="int"
-		resultType="Student">
-		select * from student where id =#{id};
+		resultMap="student">
+		select *, stu_sub.id as id_stu from student left join
+		stu_sub
+		on student.id=stu_sub.id left join subject on
+		stu_sub.id_sub=subject.id_sub where student.id = #{id};
 	</select>
-	<insert id="addStudent" parameterType="Student">
-		Insert into student
-		(id,name,branch,phone) values
-		(#{id},#{name},#{branch},#{phone});
+
+	<insert id="addStudent" parameterType="Student"
+		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+
+		insert into student(name, branch, phone) values(#{name}, #{branch},
+		#{phone});
+
+		set @studentId := (select MAX(id) from student);
+
+		Insert into
+		stu_sub
+		(id,id_sub, point_sub)
+		values
+		<foreach collection="studentSubjects" index="index"
+			item="item" separator=",">
+			(@studentId, #{item.idSub}, #{item.pointSub})
+		</foreach>
 	</insert>
+
 	<delete id="deleteStudent" parameterType="int">
-		DELETE from student
-		WHERE id = #{id};
+
+		Delete from stu_sub
+		where id = #{id};
+		DELETE from student WHERE id = #{id};
+
 	</delete>
-	<update id="updateStudent" parameterType="Student">
-		UPDATE student SET
-		name
-		= #{name}, branch = #{branch}, phone = #{phone} WHERE id = #{id};
+
+	<update id="updateStudent" parameterType="Student"
+		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+
+		UPDATE student SET student.name=#{name}, student.branch=#{branch},
+		student.phone=#{phone}
+		where id=#{id};
+
+		DELETE FROM stu_sub WHERE id =
+		#{id};
+
+		<if test="studentSubjects.size() > 0">
+			Insert into stu_sub
+			(id,id_sub, point_sub)
+			values
+			<foreach collection="studentSubjects" index="index"
+				item="item" separator=",">
+				(#{id}, #{item.idSub}, #{item.pointSub})
+			</foreach>
+		</if>
+
+
 	</update>
 
-	<select id="search" resultType="Student">
-		select * from student where 1=1
+	<select id="search" resultMap="student">
+		select *, (
+		select count(*) from stu_sub where stu_sub.id = student.id
+		) as so_mon, round((select avg(point_sub) from stu_sub where stu_sub.id
+		= student.id group by stu_sub.id), 2) as diem_tb from student
+		where
+		1=1
 		<if test="name != null">
 			AND name like '%${name}%'
 		</if>
@@ -37,23 +97,42 @@
 		<if test="branch != null">
 			AND branch like '%${branch}%'
 		</if>
+		order by id asc
+
+		limit #{pageSize} offset #{offset};
+	</select>
+
+	<select id="findCountStudents" resultType="int">
+
+		select count(*) from student where 1=1
+		<if test="name != null">
+			AND name like '%${name}%'
+		</if>
+
+		<if test="branch != null">
+			AND branch like '%${branch}%'
+		</if>
+
 	</select>
 	<select id="findStudent" resultMap="student">
 		<!-- select *, (select avg(point_sub) from stu_sub join subject on stu_sub.id_sub 
 			= subject.id_sub where id = st.id) as diem_tb from student as st join stu_sub 
 			as ss on st.id=ss.id join subject as sb on ss.id_sub=sb.id_sub; -->
-<!-- 		Select *, count(sb.sub) as so_mon from student as st join stu_sub as ss on
-		st.id=ss.id join subject as sb on ss.id_sub=sb.id_sub
-		group by st.name
-		having count(sb.sub) >3; -->
+		<!-- Select *, count(sb.sub) as so_mon from student as st join stu_sub 
+			as ss on st.id=ss.id join subject as sb on ss.id_sub=sb.id_sub group by st.name 
+			having count(sb.sub) >3; -->
 		Select *, (
-		Select count(distinct sb.sub)  from student as st join stu_sub as ss on st.id=ss.id join subject as sb on ss.id_sub=sb.id_sub
-	    where st.id = st1.id
+		Select count(distinct sb.sub) from student as st join
+		stu_sub as ss on st.id=ss.id join subject as sb on ss.id_sub=sb.id_sub
+		where st.id = st1.id
 		group by st.name
 		having count(sb.sub) >= 3
-		) as so_mon from student as st1 join stu_sub as ss1 on st1.id=ss1.id join subject as sb1 on ss1.id_sub=sb1.id_sub 
-		WHERE (select count(*) from stu_sub where id = st1.id) >= 3;
-		 
+		) as
+		so_mon from student as st1 join stu_sub as ss1 on st1.id=ss1.id join
+		subject as sb1 on ss1.id_sub=sb1.id_sub
+		WHERE (select count(*) from
+		stu_sub where id = st1.id) >= 3;
+
 	</select>
 
 	<resultMap type="Student" id="student">
@@ -61,14 +140,14 @@
 		<result column="name" property="name" />
 		<result column="branch" property="branch" />
 		<result column="phone" property="phone" />
-		<result column="diem_tb" property="diemTB" />
 		<result column="so_mon" property="soMon" />
+		<result column="diem_tb" property="diemTB" />
 		<!-- <collection property="subjects" ofType="Subject"> <result column="id_sub" 
 			property="idSub" /> <result column="sub" property="sub" /> </collection> -->
 		<collection property="studentSubjects"
 			ofType="StudentSubject">
 			<result column="id_stu_sub" property="idStuSub" />
-			<result column="id" property="id" />
+			<result column="id_stu" property="id" />
 			<result column="id_sub" property="idSub" />
 			<result column="sub" property="sub" />
 			<result column="point_sub" property="pointSub" />

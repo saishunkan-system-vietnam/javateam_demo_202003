@@ -2,8 +2,10 @@ package vn.de.example.parkingregistration;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Properties;
 
+import org.modelmapper.ModelMapper;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -53,6 +55,7 @@ public class ApplicationConfig implements WebMvcConfigurer {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
 		config.setAllowCredentials(true);
+		config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
 		source.registerCorsConfiguration("/**", config);
 		FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<CorsFilter>(new CorsFilter(source));
 		bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
@@ -74,6 +77,11 @@ public class ApplicationConfig implements WebMvcConfigurer {
 		mapperScannerConfigurer.setBasePackage("vn.de.example.parkingregistration.model.mapper");
 		mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
 		return mapperScannerConfigurer;
+	}
+	
+	@Bean
+	public ModelMapper modelMapper() {
+	    return new ModelMapper();
 	}
 
 }
