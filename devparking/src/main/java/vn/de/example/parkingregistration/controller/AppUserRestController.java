@@ -15,7 +15,7 @@ import vn.de.example.parkingregistration.service.AppUserService;
 
 @RestController
 @RequestMapping(path = "/api/user", produces = MediaType.APPLICATION_JSON_VALUE)
-public class AppUserRestController {
+public class AppUserRestController extends AbstractRestController{
 
     @Autowired
     AppUserService service;

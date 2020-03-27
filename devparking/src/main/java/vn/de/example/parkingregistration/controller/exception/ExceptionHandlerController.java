@@ -1,4 +1,4 @@
-package vn.de.example.parkingregistration.base.controller;
+package vn.de.example.parkingregistration.controller.exception;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
