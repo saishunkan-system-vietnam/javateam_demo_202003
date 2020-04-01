@@ -19,8 +19,10 @@ public class StudentDTO implements DTO {
 	private String name;
 	private String branch;
 	private String phone;
-	//List<Subject> subjects;
+	private Boolean isHaveSubject;
+	List<Subject> subjects;
 	List<StudentSubject> studentSubjects;
+
 	
 	public StudentDTO() {}
 	
@@ -35,5 +37,6 @@ public class StudentDTO implements DTO {
 	public Integer getOffset() {
 		return (page - 1) * pageSize;
 	}
+	
 	
 }

@@ -88,8 +88,7 @@
 		select count(*) from stu_sub where stu_sub.id = student.id
 		) as so_mon, round((select avg(point_sub) from stu_sub where stu_sub.id
 		= student.id group by stu_sub.id), 2) as diem_tb from student
-		where
-		1=1
+		where 1=1
 		<if test="name != null">
 			AND name like '%${name}%'
 		</if>
@@ -97,6 +96,21 @@
 		<if test="branch != null">
 			AND branch like '%${branch}%'
 		</if>
+		<if test="isHaveSubject !=null"> 
+			<if test="isHaveSubject">
+				AND student.id in  (select id from stu_sub  group by stu_sub.id having count(*) >=1)
+			</if>			
+			<if test="isHaveSubject == false">
+				AND student.id not in  (select id from stu_sub  group by stu_sub.id having count(*) >=1)
+			</if>
+		</if>
+		<if test="subjects != null and subjects.size() > 0 "> 
+				AND student.id IN  (select id from stu_sub  where 1=1 and stu_sub.id_sub IN
+				<foreach collection="subjects" index="index" item="item" open="(" close=")" separator=",">
+					#{item.idSub} 
+				</foreach> )	
+		</if>		
+		
 		order by id asc
 
 		limit #{pageSize} offset #{offset};
@@ -112,6 +126,21 @@
 		<if test="branch != null">
 			AND branch like '%${branch}%'
 		</if>
+		<if test="isHaveSubject !=null"> 
+			<if test="isHaveSubject">
+					AND student.id in  (select id from stu_sub  group by stu_sub.id having count(*) >=1)
+			</if>			
+			<if test="isHaveSubject == false">
+				AND student.id not in  (select id from stu_sub  group by stu_sub.id having count(*) >=1)
+			</if>
+		</if>
+		<if test="subjects != null and subjects.size() > 0 "> 
+				AND student.id IN (select id from stu_sub  where 1=1 and stu_sub.id_sub IN
+				<foreach collection="subjects" index="index" item="item" open="(" close=")" separator=",">
+					#{item.idSub} 
+				</foreach> )	
+		</if>
+		
 
 	</select>
 	<select id="findStudent" resultMap="student">
@@ -142,7 +171,7 @@
 		<result column="phone" property="phone" />
 		<result column="so_mon" property="soMon" />
 		<result column="diem_tb" property="diemTB" />
-		<!-- <collection property="subjects" ofType="Subject"> <result column="id_sub" 
+	<!-- 	<collection property="subjects" ofType="Subject"> <result column="id_sub" 
 			property="idSub" /> <result column="sub" property="sub" /> </collection> -->
 		<collection property="studentSubjects"
 			ofType="StudentSubject">

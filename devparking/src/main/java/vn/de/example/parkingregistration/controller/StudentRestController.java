@@ -22,6 +22,7 @@ import vn.de.example.parkingregistration.controller.dto.ResourceStudent;
 import vn.de.example.parkingregistration.controller.dto.StudentDTO;
 import vn.de.example.parkingregistration.model.Student;
 import vn.de.example.parkingregistration.service.StudentService;
+import vn.de.example.parkingregistration.service.StudentSubjectService;
 
 @RestController
 @RequestMapping(path = "/api/student", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -79,7 +80,7 @@ public class StudentRestController {
 	public ResourceStudent getResourceStudent(StudentDTO student) {
 		
 		int total = studentService.findCountStudents(student);
-		int totalPages = (int) Math.floor((total / student.getPageSize()) +1);
+		int totalPages = (int) Math.ceil(((double)total / student.getPageSize()));
 		int perPage = student.getPageSize();
 		int currentPage = student.getPage();
 
