@@ -85,10 +85,10 @@
                 <div class="card-tools">
                   <ul class="nav nav-pills ml-auto">
                     <li class="nav-item">
-                      <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                      <a class="nav-link " @click="sale(0)" :class="{active: saleIndex === 0}"  href="#revenue-chart" data-toggle="tab">Area</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
+                      <a class="nav-link" @click="sale(1)" :class="{active: saleIndex === 1}"  href="#sales-chart" data-toggle="tab">Donut</a>
                     </li>
                   </ul>
                 </div>
@@ -108,21 +108,21 @@
             </div>
             <!-- /.card -->
 
-            <!-- DIRECT CHAT -->
-            <div class="card direct-chat direct-chat-primary">
-              <div class="card-header">
+            <!-- DIRECT CHAT :class="[isActiveMenu3 && 'collapsed-card' isActiveMenu3 && 'direct-chat-contacts-open']"> -->
+            <div class="card direct-chat direct-chat-primary"   :class="[isActiveMenu3 ? 'collapsed-card' : (tabSelected && 'direct-chat-contacts-open')]" :style="isRemove && 'display:none;'">
+              <div class="card-header ui-sortable-handle" >
                 <h3 class="card-title">Direct Chat</h3>
 
                 <div class="card-tools">
                   <span data-toggle="tooltip" title="3 New Messages" class="badge badge-primary">3</span>
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" @click.prevent="openMenu3" >
+                    <i class="" :class="[isActiveMenu3 ? 'fas fa-plus' : 'fas fa-minus']"></i>
                   </button>
                   <button type="button" class="btn btn-tool" data-toggle="tooltip" title="Contacts"
-                          data-widget="chat-pane-toggle">
-                    <i class="fas fa-comments"></i>
+                          data-widget="chat-pane-toggle" @click.prevent="testx" >
+                    <i class="fas fa-comments" ></i>
                   </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove" @click="remove"><i class="fas fa-times"></i>
                   </button>
                 </div>
               </div>
@@ -446,26 +446,30 @@
           <section class="col-lg-5 connectedSortable">
 
             <!-- Map card -->
-            <div class="card bg-gradient-primary">
-              <div class="card-header border-0">
+            <div class="card bg-gradient-primary "  :class="[isActiveMenu ? 'collapsed-card' : '']">
+                              
+              <div class="card-header border-0" >
                 <h3 class="card-title">
                   <i class="fas fa-map-marker-alt mr-1"></i>
                   Visitors
                 </h3>
                 <!-- card tools -->
-                <div class="card-tools">
+                <div class="card-tools" >
                   <button type="button"
                           class="btn btn-primary btn-sm daterange"
                           data-toggle="tooltip"
-                          title="Date range">
+                          title="Date range" >
                     <i class="far fa-calendar-alt"></i>
                   </button>
                   <button type="button"
                           class="btn btn-primary btn-sm"
                           data-card-widget="collapse"
                           data-toggle="tooltip"
-                          title="Collapse">
-                    <i class="fas fa-minus"></i>
+                          title="Collapse" @click="openMenu()">
+                          <!-- <div  v-if="isActiveMenu === false"><i class="fas fa-minus" ></i></div>
+                          <div  v-else><i class="fas fa-flus" ></i></div> -->
+                          <i  class="" :class="[isActiveMenu ? 'fas fa-plus' : 'fas fa-minus']" ></i>
+                    
                   </button>
                 </div>
                 <!-- /.card-tools -->
@@ -498,7 +502,7 @@
             <!-- /.card -->
 
             <!-- solid sales graph -->
-            <div class="card bg-gradient-info">
+            <div class="card bg-gradient-info"  :class="[isActiveMenu1 && 'collapsed-card']" :style="isRemove1 && 'display:none;'">
               <div class="card-header border-0">
                 <h3 class="card-title">
                   <i class="fas fa-th mr-1"></i>
@@ -506,12 +510,13 @@
                 </h3>
 
                 <div class="card-tools">
-                  <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
+                  <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse" @click.prevent="openMenu1">
+                    <i class="" :class="[isActiveMenu1 ? 'fas fa-plus' : 'fas fa-minus']"></i>
                   </button>
-                  <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
+                  <button type="button" class="btn bg-info btn-sm" data-card-widget="remove" @click="remove1"> 
                     <i class="fas fa-times"></i>
                   </button>
+                    
                 </div>
               </div>
               <div class="card-body">
@@ -549,7 +554,7 @@
             <!-- /.card -->
 
             <!-- Calendar -->
-            <div class="card bg-gradient-success">
+            <div class="card bg-gradient-success"  :class="[isActiveMenu2 && 'collapsed-card']" :style="isRemove2 && 'display: none;'">
               <div class="card-header border-0">
 
                 <h3 class="card-title">
@@ -559,20 +564,20 @@
                 <!-- tools card -->
                 <div class="card-tools">
                   <!-- button with a dropdown -->
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                  <div class="btn-group"  >
+                    <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" @click.prevent="drop">
                       <i class="fas fa-bars"></i></button>
-                    <div class="dropdown-menu float-right" role="menu">
+                    <div class="dropdown-menu float-right" role="menu" :class="[isDrop && 'show']">
                       <a href="#" class="dropdown-item">Add new event</a>
                       <a href="#" class="dropdown-item">Clear events</a>
                       <div class="dropdown-divider"></div>
                       <a href="#" class="dropdown-item">View calendar</a>
                     </div>
                   </div>
-                  <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
+                  <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse" @click.prevent="openMenu2">
+                    <i  class="" :class="[isActiveMenu2 ? 'fas fa-plus' : 'fas fa-minus']"></i>
                   </button>
-                  <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
+                  <button type="button" class="btn btn-success btn-sm" data-card-widget="remove" @click="remove2">
                     <i class="fas fa-times"></i>
                   </button>
                 </div>
@@ -593,6 +598,15 @@
       </div><!-- /.container-fluid -->
 
         </div>
+        <a
+      id="back-to-top"
+      href="#"
+      class="btn btn-danger back-to-top"
+      role="button"
+      aria-label="Scroll to top"
+    >
+      <i class="fas fa-chevron-up"></i>
+    </a>
           <!-- Font Awesome -->
   <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
@@ -625,9 +639,87 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 export default {
     name : "Dashboard",
+    data : function(){
+      return {
+        isActiveMenu : false,
+        isActiveMenu1: false,
+        isActiveMenu2: false,
+        isActiveMenu3: false,
+        isMinus: true,
+        isDrop: false,
+        tabSelected : false,
+        saleIndex : 0,
+        isRemove: false,
+        isRemove1: false,
+        isRemove2: false
+
+        
+      }     
+    },
     components : {
         Breadcrumb
     },
+    methods: {
+      openMenu: function(){
+        this.isActiveMenu = !this.isActiveMenu;
+      },
+       openMenu1: function(){
+        this.isActiveMenu1 = !this.isActiveMenu1;
+      },
+       openMenu2: function(){
+        this.isActiveMenu2 = !this.isActiveMenu2;
+      },
+       openMenu3: function(){
+        
+          this.isActiveMenu3 = !this.isActiveMenu3;
+          
+        
+      },
+      testx: function(){
+        this.tabSelected =!this.tabSelected;
+      },
+      drop(){
+        this.isDrop = !this.isDrop;
+      },
+      remove(){
+        this.isRemove = !this.isRemove;
+      },
+       remove1(){
+        this.isRemove1 = !this.isRemove1;
+      },
+       remove2(){
+        this.isRemove2 = !this.isRemove2;
+      },
+      test(){
+        //chọn vào dấu - thì ẩn đi và đổi thành dấu +
+        //chọn vào dấu + thì hiện về ban đầu
+        //  var name = 'fas fa-minus';
+        //  var name1 = 'fas fa-flus';
+          this.test1 = !this.test1;
+          //this.isMinus = !this.isMinus;
+        //  if(this.isMinus){
+        //    return name;
+        //  }else{
+        //    return name1;
+        //  }
+      },
+      sale(index){
+        this.saleIndex = index;
+      }
+    },
+    // mounted () {
+    // $(this.$el).find('.calendar').datepicker()
+    // this.sale(0);
+    // },
+    computeds: {
+      // test: function(){
+      //   return {
+      //     minus: this.isActive,
+      //     flus: this.isFlus
+      //   }
+
+      // }
+    }
 
     // mounted(){
     //   this.$nextTick(() => {

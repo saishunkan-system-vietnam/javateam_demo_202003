@@ -82,7 +82,7 @@ export default new Router({
             children: [{
                 path: '/widgets',
                 component: () =>
-                    import ('@/views/widget/index'),
+                    import ('@/views/widget/widget'),
                 name: 'Widgets'
             }]
         },
@@ -293,6 +293,105 @@ export default new Router({
                 component: () =>
                     import ('@/views/ui/slider'),
                 name: 'Sliders'
+            }]
+        },
+        {
+            path: '/calendar',
+            component: Layout,
+            redirect: '/Calendar/calendar',
+            children: [{
+                path: 'calendar',
+                component: () =>
+                    import ('@/views/Calendar/calendar'),
+                name: 'Calendar'
+            }]
+        },
+        {
+            path: '/gallery',
+            component: Layout,
+            redirect: '/Gallery/gallery',
+            children: [{
+                path: 'gallery',
+                component: () =>
+                    import ('@/views/Gallery/gallery'),
+                name: 'Gallery'
+            }]
+        },
+        {
+            path: '/mail/inbox',
+            component: Layout,
+            redirect: '/mail/inbox',
+            children: [{
+                path: '/mail/inbox',
+                component: () =>
+                    import ('@/views/Mailbox/inbox'),
+                name: 'Inbox'
+            }]
+        },
+        {
+            path: '/mail/compose',
+            component: Layout,
+            redirect: '/mail/compose',
+            children: [{
+                path: '/mail/compose',
+                component: () =>
+                    import ('@/views/Mailbox/compose'),
+                name: 'Compose'
+            }]
+        },
+        {
+            path: '/mail/read',
+            component: Layout,
+            redirect: '/mail/read',
+            children: [{
+                path: '/mail/read',
+                component: () =>
+                    import ('@/views/Mailbox/read'),
+                name: 'Read'
+            }]
+        },
+        {
+            path: '/page/invoice',
+            component: Layout,
+            redirect: '/page/invoice',
+            children: [{
+                path: '/page/invoice',
+                component: () =>
+                    import ('@/views/pages/invoice'),
+                name: 'Invoice'
+            }]
+        },
+        {
+            path: '/page/project',
+            component: Layout,
+            redirect: '/page/project',
+            children: [{
+                path: '/page/project',
+                component: () =>
+                    import ('@/views/pages/project'),
+                name: 'Projects'
+            }]
+        },
+        {
+            path: '/page/profile',
+            component: Layout,
+            redirect: '/page/profile',
+            children: [{
+                path: '/page/profile',
+                component: () =>
+                    import ('@/views/pages/profile'),
+                name: 'Profile'
+            }]
+        },
+        {
+            path: '/page/e-commerce',
+            component: Layout,
+            redirect: '/page/e-commerce',
+            children: [{
+                path: '/page/e-commerce',
+                component: () =>
+                    import ('@/views/pages/e-commerce'),
+                name: 'E-commerce'
             }]
         },
     ]

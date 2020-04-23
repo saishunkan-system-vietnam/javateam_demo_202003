@@ -3,10 +3,10 @@
         <!-- Left navbar links -->
         <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+            <a class="nav-link" data-widget="pushmenu" href="#" @click="$emit('sideBarSmall')"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="index3.html" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Home</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
             <a href="#" class="nav-link">Contact</a>
@@ -28,12 +28,12 @@
         <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
         <!-- Messages Dropdown Menu -->
-        <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
+        <li class="nav-item dropdown ">
+        <a class="nav-link" data-toggle="dropdown" href="#" @click="drop"> 
           <i class="far fa-comments"></i>
           <span class="badge badge-danger navbar-badge">3</span>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right"  :class="[isDrop && 'show']">
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
@@ -87,11 +87,11 @@
       </li>
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
+        <a class="nav-link" data-toggle="dropdown" href="#" @click="drop1">
           <i class="far fa-bell"></i>
           <span class="badge badge-warning navbar-badge">15</span>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right"  :class="[isDrop1 && 'show']">
           <span class="dropdown-item dropdown-header">15 Notifications</span>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item">
@@ -113,16 +113,37 @@
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
+        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" @click="$emit('controlSideBar')">
           <i class="fas fa-th-large"></i>
         </a>
       </li>
     </ul>
+
     </nav>
+  
 </template>
 <script>
 export default {
-    name : "NavBar"
+    name : "NavBar",
+    props: {
+      //small: {type: Boolean, default: false}
+    },
+    data: function(){
+      return {
+        isDrop: false,
+        isDrop1: false,
+        //small: false
+      }
+    },
+    methods: {
+      drop(){
+        this.isDrop = !this.isDrop;
+      },
+      drop1(){
+        this.isDrop1 = !this.isDrop1;
+      },
+     
+    }
 }
 </script>
 <style scoped>

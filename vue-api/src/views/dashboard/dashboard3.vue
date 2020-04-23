@@ -247,6 +247,15 @@
         <!-- /.row -->
       </div>
       <!-- /.container-fluid -->
+      <a
+      id="back-to-top"
+      href="#"
+      class="btn btn-primary back-to-top"
+      role="button"
+      aria-label="Scroll to top"
+    >
+      <i class="fas fa-chevron-up"></i>
+    </a>
         <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
   <!-- IonIcons -->
